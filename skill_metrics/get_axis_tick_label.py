@@ -1,4 +1,4 @@
-from skill_metrics.use_sci_notation import use_sci_notation
+from .use_sci_notation import use_sci_notation
 
 
 def get_axis_tick_label(value):

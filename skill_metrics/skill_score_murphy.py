@@ -1,5 +1,5 @@
 import numpy as np
-from skill_metrics import rmsd
+from . import rmsd
 
 from . import utils
 

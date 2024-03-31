@@ -1,4 +1,4 @@
-from skill_metrics import error_check_stats
+from . import error_check_stats
 
 
 def taylor_statistics(predicted, reference, field=""):
@@ -51,7 +51,7 @@ def taylor_statistics(predicted, reference, field=""):
     Created on Dec 3, 2016
     """
     import numpy as np
-    from skill_metrics import centered_rms_dev
+    from . import centered_rms_dev
 
     p, r = error_check_stats(predicted, reference, field)
 

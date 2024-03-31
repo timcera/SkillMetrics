@@ -3,7 +3,7 @@ from array import array
 
 import matplotlib.pyplot as plt
 import numpy as np
-from skill_metrics import (
+from . import (
     get_target_diagram_axes,
     get_target_diagram_options,
     overlay_target_diagram_circles,

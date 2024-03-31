@@ -1,8 +1,8 @@
 import matplotlib
 import numpy as np
 from matplotlib import rcParams
-from skill_metrics import get_from_dict_or_default
-from skill_metrics.get_axis_tick_label import get_axis_tick_label
+from . import get_from_dict_or_default
+from .get_axis_tick_label import get_axis_tick_label
 
 
 def plot_taylor_axes(ax: matplotlib.axes.Axes, axes: dict, option: dict) -> list:

@@ -4,7 +4,7 @@ from typing import Union
 
 import numpy as np
 import pandas as pd
-from skill_metrics import check_on_off
+from . import check_on_off
 
 
 def _calc_rinc(tick: list) -> float:
@@ -235,9 +235,9 @@ def _default_options(CORs: list) -> dict:
     option["colormap"] = "on"
 
     option["labelrms"] = "RMSD"
-    option["labelweight"] = (
-        "bold"  # weight of the x/y labels ('light', 'normal', 'bold', ...)
-    )
+    option[
+        "labelweight"
+    ] = "bold"  # weight of the x/y labels ('light', 'normal', 'bold', ...)
     option["locationcolorbar"] = "NorthOutside"
 
     option["markercolor"] = None
@@ -487,7 +487,6 @@ def _read_options(option: dict, **kwargs) -> dict:
 
     # Process for options read from CSV file
     for index in range(len(keys)):
-
         # Skip assignment if no value provided in CSV file
         if pd.isna(values[index]):
             continue

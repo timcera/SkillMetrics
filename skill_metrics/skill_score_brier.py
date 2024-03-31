@@ -1,5 +1,5 @@
 import numpy as np
-from skill_metrics import brier_score
+from . import brier_score
 
 from . import utils
 

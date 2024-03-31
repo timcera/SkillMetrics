@@ -1,6 +1,6 @@
 import matplotlib
 import numpy as np
-from skill_metrics import get_from_dict_or_default
+from . import get_from_dict_or_default
 
 
 def overlay_taylor_diagram_circles(

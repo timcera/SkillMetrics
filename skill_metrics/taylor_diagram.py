@@ -3,7 +3,7 @@ from array import array
 
 import matplotlib.pyplot as plt
 import numpy as np
-from skill_metrics import (
+from . import (
     check_taylor_stats,
     get_taylor_diagram_axes,
     get_taylor_diagram_options,

@@ -2,7 +2,7 @@ import warnings
 
 import matplotlib
 import matplotlib.colors as clr
-from skill_metrics import (
+from . import (
     add_legend,
     get_default_markers,
     get_from_dict_or_default,
@@ -116,9 +116,14 @@ def plot_pattern_diagram_markers(ax: matplotlib.axes.Axes, X, Y, option: dict):
 
         else:
             # Obtain markers from option['markers']
-            labels, labelcolor, marker, markersize, markerfacecolor, markeredgecolor = (
-                get_single_markers(option["markers"])
-            )
+            (
+                labels,
+                labelcolor,
+                marker,
+                markersize,
+                markerfacecolor,
+                markeredgecolor,
+            ) = get_single_markers(option["markers"])
 
             # Plot markers at data points
             markerlabel = []

@@ -2,8 +2,8 @@ from math import floor, log10
 
 import matplotlib.ticker as ticker
 import numpy as np
-from skill_metrics.get_axis_tick_label import get_axis_tick_label
-from skill_metrics.use_sci_notation import use_sci_notation
+from .get_axis_tick_label import get_axis_tick_label
+from .use_sci_notation import use_sci_notation
 
 
 def find_exp(number) -> int:

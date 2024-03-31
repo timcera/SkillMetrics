@@ -110,7 +110,7 @@ def get_write_stats_options(**kwargs):
 
     @author: rochfordp
     """
-    from skill_metrics import check_on_off
+    from . import check_on_off
 
     nargin = len(kwargs)
 

@@ -1,4 +1,4 @@
-from skill_metrics import error_check_stats
+from . import error_check_stats
 
 
 def target_statistics(predicted, reference, field="", norm=False):
@@ -48,7 +48,7 @@ def target_statistics(predicted, reference, field="", norm=False):
     Created on Nov 24, 2016
     """
     import numpy as np
-    from skill_metrics import centered_rms_dev
+    from . import centered_rms_dev
 
     p, r = error_check_stats(predicted, reference, field)
 

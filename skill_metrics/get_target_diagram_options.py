@@ -3,7 +3,7 @@ import re
 from typing import Union
 
 import pandas as pd
-from skill_metrics import check_on_off
+from . import check_on_off
 
 
 def _check_dict_with_keys(
@@ -201,9 +201,9 @@ def _default_options() -> dict:
     option["colormap"] = "on"
     option["equalaxes"] = "on"
 
-    option["labelweight"] = (
-        "bold"  # weight of the x/y labels ('light', 'normal', 'bold', ...)
-    )
+    option[
+        "labelweight"
+    ] = "bold"  # weight of the x/y labels ('light', 'normal', 'bold', ...)
     option["locationcolorbar"] = "NorthOutside"
 
     option["markercolor"] = None
@@ -380,7 +380,6 @@ def _read_options(option, **kwargs) -> dict:
 
     # Process for options read from CSV file
     for index in range(len(keys)):
-
         # Skip assignment if no value provided in CSV file
         if pd.isna(values[index]):
             continue
@@ -450,7 +449,7 @@ def get_target_diagram_options(**kwargs) -> dict:
     Revised on Sep 17, 2022
     """
     from matplotlib import rcParams
-    from skill_metrics import check_on_off
+    from . import check_on_off
 
     nargin = len(kwargs)
 
