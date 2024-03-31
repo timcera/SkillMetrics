@@ -1,9 +1,10 @@
-from . import utils
-
 import numpy as np
 
+from . import utils
+
+
 def nash_sutcliffe_eff(predicted, reference):
-    '''
+    """
     Calculate the Nash-Sutcliffe efficiency.
 
     Calculates the Nash-Sutcliffe efficiency between two variables
@@ -44,12 +45,14 @@ def nash_sutcliffe_eff(predicted, reference):
     Output:
     NSE : Nash-Sutcliffe Efficiency
 
-    '''
+    """
 
     utils.check_arrays(predicted, reference)
 
     # Calculate the NSE
-    nse = 1 - (np.sum((predicted - reference)**2) /
-               np.sum((reference - np.mean(reference))**2))
+    nse = 1 - (
+        np.sum((predicted - reference) ** 2)
+        / np.sum((reference - np.mean(reference)) ** 2)
+    )
 
     return nse

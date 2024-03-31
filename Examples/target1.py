@@ -1,4 +1,4 @@
-'''
+"""
 How to create a simple target diagram
 
 A first example of how to create a simple target diagram given one set of
@@ -52,63 +52,74 @@ Created on Nov 23, 2016
 Revised on Sep 11, 2022
 
 @author: rochford.peter1@gmail.com
-'''
+"""
 
 import argparse
-from load_data import load_data
+from sys import version_info
+
 import matplotlib.pyplot as plt
-from matplotlib import rcParams
 import numpy as np
 import skill_metrics as sm
-from sys import version_info
-        
-if __name__ == '__main__':
+from load_data import load_data
+from matplotlib import rcParams
+
+if __name__ == "__main__":
 
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-noshow', dest='no_show', action='store_true',
-                            help="No figure is shown if this flag is present.")
-    arg_parser.add_argument('-nosave', dest='no_save', action='store_true',
-                            help="No figure is saved if this flag is present.")
+    arg_parser.add_argument(
+        "-noshow",
+        dest="no_show",
+        action="store_true",
+        help="No figure is shown if this flag is present.",
+    )
+    arg_parser.add_argument(
+        "-nosave",
+        dest="no_save",
+        action="store_true",
+        help="No figure is saved if this flag is present.",
+    )
     args = arg_parser.parse_args()
     del arg_parser
 
     # Set the figure properties (optional)
-    rcParams["figure.figsize"] = [8.0, 6.4] #works
-    rcParams.update({'font.size': 12}) # font size of axes text
+    rcParams["figure.figsize"] = [8.0, 6.4]  # works
+    rcParams.update({"font.size": 12})  # font size of axes text
 
     # Close any previously open graphics windows
     plt.close("all")
-    
+
     # Read data from CSV files
-    data_files = ['pred1.csv', 'pred2.csv', 'pred3.csv', 'ref.csv']
+    data_files = ["pred1.csv", "pred2.csv", "pred3.csv", "ref.csv"]
     data = load_data(data_files)
 
     # Calculate statistics for target diagram
-    target_stats1 = sm.target_statistics(data['pred1'],data['ref'],'data')
-    target_stats2 = sm.target_statistics(data['pred2'],data['ref'],'data')
-    target_stats3 = sm.target_statistics(data['pred3'],data['ref'],'data')
-     
-    # Store statistics in arrays
-    bias = np.array([target_stats1['bias'], target_stats2['bias'], 
-                     target_stats3['bias']])
-    crmsd = np.array([target_stats1['crmsd'], target_stats2['crmsd'], 
-                      target_stats3['crmsd']])
-    rmsd = np.array([target_stats1['rmsd'], target_stats2['rmsd'], 
-                     target_stats3['rmsd']])
+    target_stats1 = sm.target_statistics(data["pred1"], data["ref"], "data")
+    target_stats2 = sm.target_statistics(data["pred2"], data["ref"], "data")
+    target_stats3 = sm.target_statistics(data["pred3"], data["ref"], "data")
 
-    '''
+    # Store statistics in arrays
+    bias = np.array(
+        [target_stats1["bias"], target_stats2["bias"], target_stats3["bias"]]
+    )
+    crmsd = np.array(
+        [target_stats1["crmsd"], target_stats2["crmsd"], target_stats3["crmsd"]]
+    )
+    rmsd = np.array(
+        [target_stats1["rmsd"], target_stats2["rmsd"], target_stats3["rmsd"]]
+    )
+
+    """
     Produce the target diagram
     
     Reference circles are plotted at the maximum range of the axes and at 0.7
     times the maximum range by default.
-    '''
-    sm.target_diagram(bias,crmsd,rmsd)
+    """
+    sm.target_diagram(bias, crmsd, rmsd)
 
     # Write plot to file if arguments say so
-    None if args.no_save else plt.savefig('target1.png')
+    None if args.no_save else plt.savefig("target1.png")
 
     # Show plot if arguments say so
     None if args.no_show else plt.show()
     plt.close()
-    

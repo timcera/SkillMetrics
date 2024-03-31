@@ -1,4 +1,4 @@
-'''
+"""
 How to create a Taylor diagram with with modified axes and data point colors
 
 A fourth example of how to create a Taylor diagram given one set of
@@ -55,55 +55,82 @@ Revised on Sep 11, 2022
 
 @author: rochford.peter1@gmail.com
 @author: adlzanchetta@gmail.com
-'''
+"""
 
 import argparse
-from load_data import load_data
+from sys import version_info
+
 import matplotlib.pyplot as plt
 import numpy as np
 import skill_metrics as sm
-from sys import version_info
+from load_data import load_data
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-noshow', dest='no_show', action='store_true',
-                            help="No figure is shown if this flag is present.")
-    arg_parser.add_argument('-nosave', dest='no_save', action='store_true',
-                            help="No figure is saved if this flag is present.")
+    arg_parser.add_argument(
+        "-noshow",
+        dest="no_show",
+        action="store_true",
+        help="No figure is shown if this flag is present.",
+    )
+    arg_parser.add_argument(
+        "-nosave",
+        dest="no_save",
+        action="store_true",
+        help="No figure is saved if this flag is present.",
+    )
     args = arg_parser.parse_args()
     del arg_parser
-    
+
     # Close any previously open graphics windows
-    plt.close('all')
-    
+    plt.close("all")
+
     # Read data from CSV files
-    data_files = ['pred1.csv', 'pred2.csv', 'pred3.csv', 'ref.csv']
+    data_files = ["pred1.csv", "pred2.csv", "pred3.csv", "ref.csv"]
     data = load_data(data_files)
 
     # Calculate statistics for Taylor diagram
-    # The first array element (e.g. taylor_stats1[0]) corresponds to the 
+    # The first array element (e.g. taylor_stats1[0]) corresponds to the
     # reference series while the second and subsequent elements
     # (e.g. taylor_stats1[1:]) are those for the predicted series.
-    taylor_stats1 = sm.taylor_statistics(data['pred1'],data['ref'],'data')
-    taylor_stats2 = sm.taylor_statistics(data['pred2'],data['ref'],'data')
-    taylor_stats3 = sm.taylor_statistics(data['pred3'],data['ref'],'data')
-    
+    taylor_stats1 = sm.taylor_statistics(data["pred1"], data["ref"], "data")
+    taylor_stats2 = sm.taylor_statistics(data["pred2"], data["ref"], "data")
+    taylor_stats3 = sm.taylor_statistics(data["pred3"], data["ref"], "data")
+
     # Store statistics in arrays
-    sdev = np.array([taylor_stats1['sdev'][0], taylor_stats1['sdev'][1], 
-                     taylor_stats2['sdev'][1], taylor_stats3['sdev'][1]])
-    crmsd = np.array([taylor_stats1['crmsd'][0], taylor_stats1['crmsd'][1], 
-                      taylor_stats2['crmsd'][1], taylor_stats3['crmsd'][1]])
-    ccoef = np.array([taylor_stats1['ccoef'][0], taylor_stats1['ccoef'][1], 
-                      taylor_stats2['ccoef'][1], taylor_stats3['ccoef'][1]])
+    sdev = np.array(
+        [
+            taylor_stats1["sdev"][0],
+            taylor_stats1["sdev"][1],
+            taylor_stats2["sdev"][1],
+            taylor_stats3["sdev"][1],
+        ]
+    )
+    crmsd = np.array(
+        [
+            taylor_stats1["crmsd"][0],
+            taylor_stats1["crmsd"][1],
+            taylor_stats2["crmsd"][1],
+            taylor_stats3["crmsd"][1],
+        ]
+    )
+    ccoef = np.array(
+        [
+            taylor_stats1["ccoef"][0],
+            taylor_stats1["ccoef"][1],
+            taylor_stats2["ccoef"][1],
+            taylor_stats3["ccoef"][1],
+        ]
+    )
 
     # Specify labels for points in a cell array (M1 for model prediction 1,
     # etc.). Note that a label needs to be specified for the reference even
     # though it is not used.
-    label = ['Non-Dimensional Observation', 'M1', 'M2', 'M3']
-    
-    '''
+    label = ["Non-Dimensional Observation", "M1", "M2", "M3"]
+
+    """
     Produce the Taylor diagram
 
     Label the points and change the axis options for SDEV, CRMSD, and CCOEF.
@@ -115,18 +142,30 @@ if __name__ == '__main__':
     For an exhaustive list of options to customize your diagram, 
     please call the function at a Python command line:
     >> taylor_diagram
-    '''
-    sm.taylor_diagram(sdev,crmsd,ccoef, markerLabel = label,
-                      markerLabelColor = 'r', 
-                      tickRMS= np.arange(0,60,10),
-                      tickRMSangle = 110.0, 
-                      colRMS = 'm', styleRMS = ':', widthRMS = 2.0,
-                      tickSTD = np.arange(0,80,20), axismax = 60.0, 
-                      colSTD = 'b', styleSTD = '-.', widthSTD = 1.0,
-                      colCOR = 'k', styleCOR = '--', widthCOR = 1.0)
+    """
+    sm.taylor_diagram(
+        sdev,
+        crmsd,
+        ccoef,
+        markerLabel=label,
+        markerLabelColor="r",
+        tickRMS=np.arange(0, 60, 10),
+        tickRMSangle=110.0,
+        colRMS="m",
+        styleRMS=":",
+        widthRMS=2.0,
+        tickSTD=np.arange(0, 80, 20),
+        axismax=60.0,
+        colSTD="b",
+        styleSTD="-.",
+        widthSTD=1.0,
+        colCOR="k",
+        styleCOR="--",
+        widthCOR=1.0,
+    )
 
     # Write plot to file if arguments say so
-    None if args.no_save else plt.savefig('taylor4.png')
+    None if args.no_save else plt.savefig("taylor4.png")
 
     # Show plot if arguments say so
     None if args.no_show else plt.show()

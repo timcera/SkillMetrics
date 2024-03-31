@@ -1,4 +1,4 @@
-'''
+"""
 How to create a Taylor diagram with multiple sets of data overlaid
 
 A twelfth example of how to create a Taylor diagram given one set of
@@ -54,79 +54,103 @@ Revised on Aug 28, 2022
 
 @author: rochford.peter1@gmail.com
 @author: adlzanchetta@gmail.com
-'''
+"""
 
 import argparse
-import matplotlib.pyplot as plt
-from matplotlib import rcParams
 import pickle
-import skill_metrics as sm
 from sys import version_info
+
+import matplotlib.pyplot as plt
+import skill_metrics as sm
+from matplotlib import rcParams
+
 
 def load_obj(name):
     # Load object from file in pickle format
     if version_info[0] == 2:
-        suffix = 'pkl'
+        suffix = "pkl"
     else:
-        suffix = 'pkl3'
+        suffix = "pkl3"
 
-    with open(name + '.' + suffix, 'rb') as f:
-        return pickle.load(f) # Python2 succeeds
-    
-class Container(object): 
+    with open(name + "." + suffix, "rb") as f:
+        return pickle.load(f)  # Python2 succeeds
+
+
+class Container(object):
     def __init__(self, target_stats1, target_stats2, taylor_stats1, taylor_stats2):
         self.target_stats1 = target_stats1
         self.target_stats2 = target_stats2
         self.taylor_stats1 = taylor_stats1
         self.taylor_stats2 = taylor_stats2
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-noshow', dest='no_show', action='store_true',
-                            help="No figure is shown if this flag is present.")
-    arg_parser.add_argument('-nosave', dest='no_save', action='store_true',
-                            help="No figure is saved if this flag is present.")
+    arg_parser.add_argument(
+        "-noshow",
+        dest="no_show",
+        action="store_true",
+        help="No figure is shown if this flag is present.",
+    )
+    arg_parser.add_argument(
+        "-nosave",
+        dest="no_save",
+        action="store_true",
+        help="No figure is saved if this flag is present.",
+    )
     args = arg_parser.parse_args()
     del arg_parser
 
     # Set the figure properties (optional)
     rcParams["figure.figsize"] = [6.0, 4.8]
-    rcParams['lines.linewidth'] = 1 # line width for plots
-    rcParams.update({'font.size': 12}) # font size of axes text
-    
+    rcParams["lines.linewidth"] = 1  # line width for plots
+    rcParams.update({"font.size": 12})  # font size of axes text
+
     # Close any previously open graphics windows
     # ToDo: fails to work within Eclipse
-    plt.close('all')
-    
-    # Read Taylor statistics for ERA Interim (stats1) and TRMM (stats2) 
-    # data with respect to APHRODITE observations for each of years 2001 to 
+    plt.close("all")
+
+    # Read Taylor statistics for ERA Interim (stats1) and TRMM (stats2)
+    # data with respect to APHRODITE observations for each of years 2001 to
     # 2014 from pickle file
-    stats = load_obj('Mekong_Basin_data') # observations
+    stats = load_obj("Mekong_Basin_data")  # observations
 
     # Specify labels for points in a dictionary because only desire labels
     # for each data set.
-    label = {'ERA-5': 'r', 'TRMM': 'b'}
-    
-    '''
-    Produce the Taylor diagram for the first dataset
-    '''
-    sm.taylor_diagram(stats.taylor_stats1['sdev'], 
-                      stats.taylor_stats1['crmsd'], 
-                      stats.taylor_stats1['ccoef'], markercolor ='r', alpha = 0.0)
+    label = {"ERA-5": "r", "TRMM": "b"}
 
-    '''
+    """
+    Produce the Taylor diagram for the first dataset
+    """
+    sm.taylor_diagram(
+        stats.taylor_stats1["sdev"],
+        stats.taylor_stats1["crmsd"],
+        stats.taylor_stats1["ccoef"],
+        markercolor="r",
+        alpha=0.0,
+    )
+
+    """
     Overlay the second dataset
-    '''
-    sm.taylor_diagram(stats.taylor_stats2['sdev'], 
-                      stats.taylor_stats2['crmsd'], 
-                      stats.taylor_stats2['ccoef'], markercolor ='b', alpha = 0.0,
-                      overlay = 'on', markerLabel = label)
+    """
+    sm.taylor_diagram(
+        stats.taylor_stats2["sdev"],
+        stats.taylor_stats2["crmsd"],
+        stats.taylor_stats2["ccoef"],
+        markercolor="b",
+        alpha=0.0,
+        overlay="on",
+        markerLabel=label,
+    )
 
     # Write plot to file if arguments say so
-    None if args.no_save else plt.savefig('taylor12.png', dpi=150, facecolor='w',
-        bbox_inches='tight')
+    (
+        None
+        if args.no_save
+        else plt.savefig("taylor12.png", dpi=150, facecolor="w", bbox_inches="tight")
+    )
 
     # Show plot if arguments say so
     None if args.no_show else plt.show()

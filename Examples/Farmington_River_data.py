@@ -1,4 +1,4 @@
-'''
+"""
 Program to create a pickle file of statistics on water temperatures 
 in the Farmington River basin of Connecticut.
 
@@ -24,30 +24,34 @@ Created on Jan 5, 2019
 Revised on Mar 14, 2023
 
 @author: prochford@thesymplectic.com
-'''
+"""
+
+import pickle
+from sys import version_info
 
 # from Container import Container
 import numpy as np
-import pickle
-from sys import version_info
+
 
 def save_obj(obj, name):
     # Save object to file in pickle format
     if version_info[0] == 2:
-        suffix = 'pkl'
+        suffix = "pkl"
     else:
-        suffix = 'pkl3'
+        suffix = "pkl3"
 
-    with open(name + '.' + suffix, 'wb') as f:
+    with open(name + "." + suffix, "wb") as f:
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+
 
 def load_obj(name):
     # Load object from file in pickle format
-    with open(name + '.' + suffix, 'rb') as f:
+    with open(name + "." + suffix, "rb") as f:
         return pickle.load(f)
-    
-class Container(object): 
-    
+
+
+class Container(object):
+
     def __init__(self, bias, sdev, crmsd, ccoef, rmsd, gageID):
         self.bias = bias
         self.sdev = sdev
@@ -55,52 +59,166 @@ class Container(object):
         self.ccoef = ccoef
         self.rmsd = rmsd
         self.gageID = gageID
-        
-if __name__ == '__main__':
-    suffix = 'pkl3' # suffix chosen to identify Python 3 version
 
-    print('Storing statistics in arrays')
-    
+
+if __name__ == "__main__":
+    suffix = "pkl3"  # suffix chosen to identify Python 3 version
+
+    print("Storing statistics in arrays")
+
     # Store statistics in arrays
-    bias = np.array([2., 3.14553461, 1.70174681, 2.05461789, 3.44820728, 3.331247, 
-      2.18986289, 1.97757902, 2.49535221, 1.93398277, 2.48857169, 3.94088987, 
-      3.05299077, 1.73629794, 1.65421186, 1.97949903, 1.67482769, 2.34824349, 
-      3.00062646, 2.02561728, 2.82079116, 3.90890371, 2.89717094])
+    bias = np.array(
+        [
+            2.0,
+            3.14553461,
+            1.70174681,
+            2.05461789,
+            3.44820728,
+            3.331247,
+            2.18986289,
+            1.97757902,
+            2.49535221,
+            1.93398277,
+            2.48857169,
+            3.94088987,
+            3.05299077,
+            1.73629794,
+            1.65421186,
+            1.97949903,
+            1.67482769,
+            2.34824349,
+            3.00062646,
+            2.02561728,
+            2.82079116,
+            3.90890371,
+            2.89717094,
+        ]
+    )
 
-    sdev = np.array([2., 3.14553461, 1.70174681, 2.05461789, 3.44820728, 3.331247, 
-      2.18986289, 1.97757902, 2.49535221, 1.93398277, 2.48857169, 3.94088987, 
-      3.05299077, 1.73629794, 1.65421186, 1.97949903, 1.67482769, 2.34824349, 
-      3.00062646, 2.02561728, 2.82079116, 3.90890371, 2.89717094])
-    
-    crmsd = np.array([0., 3.03400143, 1.6354011, 1.89540252, 2.94991379, 3.26069125,
-      1.82712869, 1.94384506, 1.93774371, 1.63024346, 2.36485667, 3.79410965,
-      2.73408101, 1.71367031, 1.52986428, 1.43703818, 1.67181766, 2.27450201,
-      2.85756379, 1.87334582, 2.74755423, 3.02473108, 0.7749413]        )
-    
-    ccoef = np.array([1., 0.92744094, 0.97859578, 0.9710517, 0.44332298, 0.91796932,
-      0.96274239, 0.90789301, 0.76994947, 0.92060021, 0.81360916, 0.8042565,
-      0.88938967, 0.97571, 0.90955152, 0.9103302, 0.92293029, 0.96556277,
-      0.5011478, 0.91645338, 0.95567553, 0.62854216, 0.92057723])
+    sdev = np.array(
+        [
+            2.0,
+            3.14553461,
+            1.70174681,
+            2.05461789,
+            3.44820728,
+            3.331247,
+            2.18986289,
+            1.97757902,
+            2.49535221,
+            1.93398277,
+            2.48857169,
+            3.94088987,
+            3.05299077,
+            1.73629794,
+            1.65421186,
+            1.97949903,
+            1.67482769,
+            2.34824349,
+            3.00062646,
+            2.02561728,
+            2.82079116,
+            3.90890371,
+            2.89717094,
+        ]
+    )
 
-    rmsd = np.sqrt(np.multiply(bias,bias) + np.multiply(crmsd,crmsd))
+    crmsd = np.array(
+        [
+            0.0,
+            3.03400143,
+            1.6354011,
+            1.89540252,
+            2.94991379,
+            3.26069125,
+            1.82712869,
+            1.94384506,
+            1.93774371,
+            1.63024346,
+            2.36485667,
+            3.79410965,
+            2.73408101,
+            1.71367031,
+            1.52986428,
+            1.43703818,
+            1.67181766,
+            2.27450201,
+            2.85756379,
+            1.87334582,
+            2.74755423,
+            3.02473108,
+            0.7749413,
+        ]
+    )
+
+    ccoef = np.array(
+        [
+            1.0,
+            0.92744094,
+            0.97859578,
+            0.9710517,
+            0.44332298,
+            0.91796932,
+            0.96274239,
+            0.90789301,
+            0.76994947,
+            0.92060021,
+            0.81360916,
+            0.8042565,
+            0.88938967,
+            0.97571,
+            0.90955152,
+            0.9103302,
+            0.92293029,
+            0.96556277,
+            0.5011478,
+            0.91645338,
+            0.95567553,
+            0.62854216,
+            0.92057723,
+        ]
+    )
+
+    rmsd = np.sqrt(np.multiply(bias, bias) + np.multiply(crmsd, crmsd))
 
     # Specify gage identifiers (IDs) as a list
     # Note that a label needs to be specified for the reference even
     # though it is not used.
-    gageID = ['Obs', '14197', '14442', '14713', '14484', '14841', '15240', '15320', 
-             '15516', '15571', '15790', '15792', '15825', '15844', '16058', '16059', 
-             '16060', '16066', '16091', '17338', '17364', '17365', '17437']
+    gageID = [
+        "Obs",
+        "14197",
+        "14442",
+        "14713",
+        "14484",
+        "14841",
+        "15240",
+        "15320",
+        "15516",
+        "15571",
+        "15790",
+        "15792",
+        "15825",
+        "15844",
+        "16058",
+        "16059",
+        "16060",
+        "16066",
+        "16091",
+        "17338",
+        "17364",
+        "17365",
+        "17437",
+    ]
 
     # Create container for arrays and list
     data = Container(bias, sdev, crmsd, ccoef, rmsd, gageID)
-    
+
     # Save dictionaries to pickle file
-    save_obj(data,'Farmington_River_data')
-    
+    save_obj(data, "Farmington_River_data")
+
     # Print summary
-    data_read = load_obj('Farmington_River_data')
+    data_read = load_obj("Farmington_River_data")
     ngage = len(data_read.gageID)
-    print('\nNumber of gauges = ' + str(ngage-1))
-    
-    print('\nFinished')
-    
+    print("\nNumber of gauges = " + str(ngage - 1))
+
+    print("\nFinished")

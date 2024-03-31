@@ -1,5 +1,7 @@
-def get_from_dict_or_default(options: dict, default_key: str, dict_key: str, key_key: str):
-    '''
+def get_from_dict_or_default(
+    options: dict, default_key: str, dict_key: str, key_key: str
+):
+    """
     Gets values of keys from dictionary or returns defaults.
 
     Given a dictionary, the key of the default value (default_key), the key of a potential
@@ -20,7 +22,7 @@ def get_from_dict_or_default(options: dict, default_key: str, dict_key: str, key
         adlzanchetta@gmail.com
 
     Created on Aug 14, 2022
-    '''
+    """
 
     if options[dict_key] is None:
         return options[default_key]

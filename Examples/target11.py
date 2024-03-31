@@ -1,4 +1,4 @@
-'''
+"""
 How to create a target diagram with a large number of symbols of
 different color along with a legend.
 
@@ -61,28 +61,31 @@ Created on Mar 14, 2023
 Revised on Mar 14, 2023
 
 @author: rochford.peter1@gmail.com
-'''
+"""
 
 import argparse
-from load_data import load_data
+import pickle
+from sys import version_info
+
 import matplotlib.pyplot as plt
 import numpy as np
-import pickle
 import skill_metrics as sm
-from sys import version_info
-   
+from load_data import load_data
+
+
 def load_obj(name):
     # Load object from file in pickle format
     if version_info[0] == 2:
-        suffix = 'pkl'
+        suffix = "pkl"
     else:
-        suffix = 'pkl3'
+        suffix = "pkl3"
 
-    with open(name + '.' + suffix, 'rb') as f:
-        return pickle.load(f) # Python2 succeeds
+    with open(name + "." + suffix, "rb") as f:
+        return pickle.load(f)  # Python2 succeeds
 
-class Container(object): 
-    
+
+class Container(object):
+
     def __init__(self, bias, sdev, crmsd, ccoef, rmsd, gageID):
         self.bias = bias
         self.sdev = sdev
@@ -90,28 +93,37 @@ class Container(object):
         self.ccoef = ccoef
         self.rmsd = rmsd
         self.gageID = gageID
-     
-if __name__ == '__main__':
-    
+
+
+if __name__ == "__main__":
+
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-noshow', dest='no_show', action='store_true',
-                            help="No figure is shown if this flag is present.")
-    arg_parser.add_argument('-nosave', dest='no_save', action='store_true',
-                            help="No figure is saved if this flag is present.")
+    arg_parser.add_argument(
+        "-noshow",
+        dest="no_show",
+        action="store_true",
+        help="No figure is shown if this flag is present.",
+    )
+    arg_parser.add_argument(
+        "-nosave",
+        dest="no_save",
+        action="store_true",
+        help="No figure is saved if this flag is present.",
+    )
     args = arg_parser.parse_args()
     del arg_parser
 
     # Close any previously open graphics windows
-    plt.close('all')
-        
+    plt.close("all")
+
     # Read data from pickle file
-    data = load_obj('Farmington_River_data')
-    
-    '''
+    data = load_obj("Farmington_River_data")
+
+    """
     Specify individual marker label (key), label color, symbol, size, symbol face color, 
     symbol edge color
-    '''
+    """
     MARKERS = {
         "14197": {
             "labelColor": "k",
@@ -268,7 +280,7 @@ if __name__ == '__main__':
             "edgeColor": "c",
         },
     }
-    
+
     # Change number of data points to illustrate effect
     # of changing number of columns
     ncol = 2
@@ -287,15 +299,15 @@ if __name__ == '__main__':
         crmsd = data.crmsd[1:]
         rmsd = data.rmsd[1:]
         gageID = data.gageID[1:]
-        bias = np.append(sdev,data.bias[1:11])
-        crmsd = np.append(crmsd,data.crmsd[1:11])
-        rmsd = np.append(ccoef,data.rmsd[1:11])
+        bias = np.append(sdev, data.bias[1:11])
+        crmsd = np.append(crmsd, data.crmsd[1:11])
+        rmsd = np.append(ccoef, data.rmsd[1:11])
         gageID = gageID + data.gageID[1:11]
-    
+
     # Must set figure size here to prevent legend from being cut off
     plt.figure(num=1, figsize=(8, 6))
-    
-    '''
+
+    """
     Produce the target diagram
 
     Label the points and change the axis options for SDEV, CRMSD, and CCOEF.
@@ -307,18 +319,23 @@ if __name__ == '__main__':
     For an exhaustive list of options to customize your diagram, 
     please call the function at a Python command line:
     >> target_diagram
-    # '''
-    sm.target_diagram(bias,crmsd,rmsd, markers = MARKERS, 
-                      markerLegend = 'on', 
-                      ticks = np.arange(-6,8,2), 
-                      axismax = 50.0, 
-                      circles = [2, 4, 6], 
-                      circleLineSpec = 'b-.', circleLineWidth = 1.5)
-    
+    # """
+    sm.target_diagram(
+        bias,
+        crmsd,
+        rmsd,
+        markers=MARKERS,
+        markerLegend="on",
+        ticks=np.arange(-6, 8, 2),
+        axismax=50.0,
+        circles=[2, 4, 6],
+        circleLineSpec="b-.",
+        circleLineWidth=1.5,
+    )
+
     # Write plot to file if arguments say so
-    None if args.no_save else plt.savefig('target11.png')
-    
+    None if args.no_save else plt.savefig("target11.png")
+
     # Show plot if arguments say so
     None if args.no_show else plt.show()
     plt.close()
-

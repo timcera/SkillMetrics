@@ -1,10 +1,11 @@
-from . import utils
-
 import numpy as np
 from skill_metrics import rmsd
 
-def skill_score_murphy(predicted,reference):
-    '''
+from . import utils
+
+
+def skill_score_murphy(predicted, reference):
+    """
     Calculate non-dimensional skill score (SS) between two variables using
     definition of Murphy (1988)
 
@@ -46,17 +47,17 @@ def skill_score_murphy(predicted,reference):
         prochford@thesymplectic.com
 
     Created on Dec 7, 2016
-    '''
+    """
 
     utils.check_arrays(predicted, reference)
 
     # Calculate RMSE
-    rmse2 = rmsd(predicted,reference)**2
+    rmse2 = rmsd(predicted, reference) ** 2
 
     # Calculate standard deviation
-    sdev2 = np.std(reference,ddof=1)**2
+    sdev2 = np.std(reference, ddof=1) ** 2
 
-    #% Calculate skill score
-    ss = 1 - rmse2/sdev2
+    # % Calculate skill score
+    ss = 1 - rmse2 / sdev2
 
     return ss

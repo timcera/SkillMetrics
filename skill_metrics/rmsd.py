@@ -1,9 +1,10 @@
-from . import utils
-
 import numpy as np
 
-def rmsd(predicted,reference):
-    '''
+from . import utils
+
+
+def rmsd(predicted, reference):
+    """
     Calculate root-mean-square deviation (RMSD) between two variables
 
     Calculates the root-mean-square deviation between two variables
@@ -29,11 +30,11 @@ def rmsd(predicted,reference):
         prochford@thesymplectic.com
 
     Created on Dec 9, 2016
-    '''
+    """
 
     utils.check_arrays(predicted, reference)
 
     # Calculate the RMSE
-    r = np.sqrt(np.sum(np.square(predicted - reference))/len(predicted))
+    r = np.sqrt(np.sum(np.square(predicted - reference)) / len(predicted))
 
     return r

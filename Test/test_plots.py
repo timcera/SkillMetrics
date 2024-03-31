@@ -1,4 +1,4 @@
-'''
+"""
 This script was created to facilitate identification of undesired side effects
 of updates related to the generation of target and Taylor diagrams using the
 existing examples.
@@ -66,32 +66,34 @@ Author: Andre D. L. Zanchetta
 Created on Aug 28, 2022
 
 @author: adlzanchetta@gmail.com
-'''
+"""
 
-from PIL import Image
-import numpy as np
-import subprocess
 import argparse
 import glob
 import os
+import subprocess
 
+import numpy as np
 import pandas  # this script does not use pandas, but import it to ensure the
-               #    functionality of the others
+from PIL import Image
+
+#    functionality of the others
 
 
 # ## CONSTANTS ################################################################## #
 
 IMAGES_FORMAT = ".png"
-EXAMPLES_FOLDER_NAME = 'Examples'
+EXAMPLES_FOLDER_NAME = "Examples"
 SCRIPTS_TESTED = ("target*[0-9].py", "taylor*[0-9].py")
-#SCRIPTS_TESTED = ("target*[0-9].py", ) # target diagrams only, must be a tuple
-#SCRIPTS_TESTED = ("taylor*[0-9].py", ) # Taylor diagrams only, must be a tuple
+# SCRIPTS_TESTED = ("target*[0-9].py", ) # target diagrams only, must be a tuple
+# SCRIPTS_TESTED = ("taylor*[0-9].py", ) # Taylor diagrams only, must be a tuple
 PYTHON_COMMAND = "python3 <SCRIPT> -noshow"
 DEBUG_FILE_NAME = "<BASE>%s" % IMAGES_FORMAT
 EXAMP_FILE_NAME = "<BASE>_example%s" % IMAGES_FORMAT
 
 
 # ## DEFS ####################################################################### #
+
 
 def change_cwd() -> None:
     """
@@ -152,7 +154,7 @@ def get_comparable_pixels_rgba(file_path_1: str, file_path_2: str) -> tuple:
     # get the sizes of the smallest
     min_x = min(shape_prev[0], shape_curr[0])
     min_y = min(shape_prev[1], shape_curr[1])
-    
+
     # reshape both images
     min_xy = (min_y, min_x)
     img_prev, img_curr = img_prev.resize(min_xy), img_curr.resize(min_xy)
@@ -181,7 +183,9 @@ def compare_rasters_pixelwise(prev: str, curr: str) -> tuple:
         pixels_prev, pixels_curr, resized = get_comparable_pixels_rgba(prev, curr)
 
         # get images 'intensities' (color magnitude)
-        pixels_maginitude_1, pixels_maginitude_2 = np.sum(pixels_prev), np.sum(pixels_curr)
+        pixels_maginitude_1, pixels_maginitude_2 = np.sum(pixels_prev), np.sum(
+            pixels_curr
+        )
         pixels_maginitude_mean = np.mean([pixels_maginitude_1, pixels_maginitude_2])
         del pixels_maginitude_1, pixels_maginitude_2
 
@@ -189,9 +193,9 @@ def compare_rasters_pixelwise(prev: str, curr: str) -> tuple:
         pixels_dist = np.sum(pixels_prev - pixels_curr)
         pixels_dist_pct = 100 * pixels_dist / pixels_maginitude_mean
         del pixels_dist, pixels_maginitude_mean
-        
+
         return pixels_dist_pct, resized
-        
+
     except FileNotFoundError as e:
         print("  ", e)
         raise e
@@ -213,39 +217,50 @@ def evaluate_output(all_script_file_names: tuple, clean_files: bool) -> None:
         output_file_name = script_file_name[0:-3]
         output_file_name_new = DEBUG_FILE_NAME.replace("<BASE>", output_file_name)
         output_file_name_old = EXAMP_FILE_NAME.replace("<BASE>", output_file_name)
-        del output_file_name    
+        del output_file_name
 
         # define command to execute
         py_command = PYTHON_COMMAND.replace("<SCRIPT>", script_file_name)
 
         if os.path.exists(output_file_name_old):
-            
+
             # run the command and calculate files distance
             subprocess.run(py_command, shell=True, stdout=subprocess.DEVNULL)
             rasters_distance_pct, resized = compare_rasters_pixelwise(
-                output_file_name_old, output_file_name_new)
-            
+                output_file_name_old, output_file_name_new
+            )
+
             # communicate result
             if rasters_distance_pct < 2:
                 # Changes lower than 2% may be considered negligible
-                status = 'GOOD'
+                status = "GOOD"
             elif rasters_distance_pct < 10:
                 # Changes between 2% and 10% should be checked
-                status = 'CHECK'
+                status = "CHECK"
             else:
                 # More than 10% is a probable case of bug created
-                status = 'BAD'
-            print(" %02d: %6.02f%% distance between '%s' and '%s', %s%s." %
-                (script_count+1, rasters_distance_pct, output_file_name_old,
-                 output_file_name_new, status, " (size adjusted)" if resized else ""))
+                status = "BAD"
+            print(
+                " %02d: %6.02f%% distance between '%s' and '%s', %s%s."
+                % (
+                    script_count + 1,
+                    rasters_distance_pct,
+                    output_file_name_old,
+                    output_file_name_new,
+                    status,
+                    " (size adjusted)" if resized else "",
+                )
+            )
 
             del rasters_distance_pct, resized
 
         else:
             # if old image file does not exist, skip
-            print(" %02d. Skipping '%s': base figure not found." % 
-                (script_count+1, script_file_name))
-        
+            print(
+                " %02d. Skipping '%s': base figure not found."
+                % (script_count + 1, script_file_name)
+            )
+
         # delete new file if needed
         if clean_files and os.path.exists(output_file_name_new):
             os.remove(output_file_name_new)
@@ -258,12 +273,16 @@ def evaluate_output(all_script_file_names: tuple, clean_files: bool) -> None:
 
 # ## MAIN ####################################################################### #
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    # Defines the output file name or path 
+    # Defines the output file name or path
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-clean_files', dest='clean_files', action='store_true',
-                            help="Delete new files if this flag is present.")
+    arg_parser.add_argument(
+        "-clean_files",
+        dest="clean_files",
+        action="store_true",
+        help="Delete new files if this flag is present.",
+    )
     args = arg_parser.parse_args()
     del arg_parser
 

@@ -1,5 +1,5 @@
 def report_duplicate_stats(duplicates):
-    '''
+    """
     Reports list of pairs of statistics that are duplicates.
 
     INPUTS:
@@ -15,12 +15,12 @@ def report_duplicate_stats(duplicates):
         prochford@thesymplectic.com
 
     Created on Apr 23, 2017
-    '''
+    """
 
-    if len(duplicates) == 0: return
+    if len(duplicates) == 0:
+        return
 
     # Report duplicates to screen
-    print('Duplicate pairs of statistics:')
+    print("Duplicate pairs of statistics:")
     for pair in duplicates:
         print(str(pair))
-

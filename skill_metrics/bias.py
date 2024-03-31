@@ -1,9 +1,10 @@
-from . import utils
-
 import numpy as np
 
-def bias(predicted,reference):
-    '''
+from . import utils
+
+
+def bias(predicted, reference):
+    """
     Calculate the bias (B) between two variables PREDICTED and
     REFERENCE (E'). The latter is calculated using the formula:
 
@@ -25,7 +26,7 @@ def bias(predicted,reference):
         prochford@thesymplectic.com
 
     Created on Dec 9, 2016
-    '''
+    """
 
     utils.check_arrays(predicted, reference)
 

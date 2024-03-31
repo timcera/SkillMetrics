@@ -1,9 +1,10 @@
-from . import utils
-
 import numpy as np
 
-def brier_score(forecast,observed):
-    '''
+from . import utils
+
+
+def brier_score(forecast, observed):
+    """
     Calculate Brier score (BS) between two variables
 
     Calculates the Brier score (BS), a measure of the mean-square error of
@@ -38,19 +39,19 @@ def brier_score(forecast,observed):
         prochford@thesymplectic.com
 
     Created on Dec 15, 2016
-    '''
+    """
 
     utils.check_arrays(forecast, observed)
 
     # Check for valid values
     index = np.where(np.logical_or(forecast < 0, forecast > 1))
     if sum(index) > 0:
-        raise ValueError('Forecast has values outside interval [0,1].')
+        raise ValueError("Forecast has values outside interval [0,1].")
     index = np.where(np.logical_and(observed != 0, observed != 1))
     if sum(index) > 0:
-        raise ValueError('Observed has values not equal to 0 or 1.')
+        raise ValueError("Observed has values not equal to 0 or 1.")
 
     # Calculate score
-    bs = np.sum(np.square(forecast - observed))/len(forecast)
+    bs = np.sum(np.square(forecast - observed)) / len(forecast)
 
     return bs

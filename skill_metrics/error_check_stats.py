@@ -1,7 +1,8 @@
 from . import utils
 
-def error_check_stats(predicted,reference,field=''):
-    '''
+
+def error_check_stats(predicted, reference, field=""):
+    """
     Checks the arguments provided to the statistics functions for the
     target and Taylor diagrams. THe data is provided in the predicted
     field (PREDICTED) and the reference field (REFERENCE).
@@ -28,20 +29,21 @@ def error_check_stats(predicted,reference,field=''):
 
     Created on June 12, 2018
 
-    '''
-    from array import array
+    """
     import numbers
+    from array import array
+
     import numpy as np
     import pandas as pd
 
     # Check for valid arguments
     if isinstance(predicted, dict):
-        if field == '':
-            raise ValueError('FIELD argument not supplied.')
+        if field == "":
+            raise ValueError("FIELD argument not supplied.")
         if field in predicted:
             p = np.array(predicted[field], dtype=float)
         else:
-            raise ValueError('Field is not in PREDICTED dictionary: ' + field)
+            raise ValueError("Field is not in PREDICTED dictionary: " + field)
     elif isinstance(predicted, list):
         p = np.array(predicted, dtype=float)
     elif isinstance(predicted, np.ndarray):
@@ -49,15 +51,15 @@ def error_check_stats(predicted,reference,field=''):
     elif isinstance(predicted, pd.Series):
         p = predicted.values
     else:
-        raise ValueError('PREDICTED argument must be a dictionary.')
+        raise ValueError("PREDICTED argument must be a dictionary.")
 
     if isinstance(reference, dict):
-        if field == '':
-            raise ValueError('FIELD argument not supplied.')
+        if field == "":
+            raise ValueError("FIELD argument not supplied.")
         if field in reference:
             r = np.array(reference[field], dtype=float)
         else:
-            raise ValueError('Field is not in REFERENCE dictionary: ' + field)
+            raise ValueError("Field is not in REFERENCE dictionary: " + field)
     elif isinstance(reference, list):
         r = np.array(reference, dtype=float)
     elif isinstance(reference, np.ndarray):
@@ -65,30 +67,30 @@ def error_check_stats(predicted,reference,field=''):
     elif isinstance(reference, pd.Series):
         r = reference.values
     else:
-        raise ValueError('REFERENCE argument must be a dictionary.')
+        raise ValueError("REFERENCE argument must be a dictionary.")
 
     # Test the input fields are numeric quantities
     if isinstance(p, array):
         p = np.array(p)
     if isinstance(p, numbers.Number):
-        p = np.array(p,ndmin=1)
+        p = np.array(p, ndmin=1)
     if not isinstance(p, np.ndarray):
-        raise ValueError('Argument PREDICTED does not contain a numeric array')
+        raise ValueError("Argument PREDICTED does not contain a numeric array")
 
     if isinstance(r, array):
         r = np.array(p)
     if isinstance(r, numbers.Number):
-        r = np.array(r,ndmin=1)
+        r = np.array(r, ndmin=1)
     if not isinstance(r, np.ndarray):
-        raise ValueError('Argument REFERENCE does not contain a numeric array')
+        raise ValueError("Argument REFERENCE does not contain a numeric array")
 
     # Check that dimensions of predicted and reference fields match
     utils.check_arrays(p, r)
 
     # Check that all values are finite
     if not np.isfinite(p).all():
-        raise ValueError('PREDICTED field has non-finite values')
+        raise ValueError("PREDICTED field has non-finite values")
     if not np.isfinite(r).all():
-        raise ValueError('REFERENCE field has non-finite values')
+        raise ValueError("REFERENCE field has non-finite values")
 
     return p, r

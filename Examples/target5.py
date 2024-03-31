@@ -1,4 +1,4 @@
-'''
+"""
 How to create a target diagram with a color bar
 
 A fifth example of how to create a target diagram given one set of
@@ -53,51 +53,63 @@ Created on Dec 1, 2016
 Revised on Sep 11, 2022
 
 @author: rochford.peter1@gmail.com
-'''
+"""
 
 import argparse
-from load_data import load_data
+from sys import version_info
+
 import matplotlib.pyplot as plt
 import numpy as np
 import skill_metrics as sm
-from sys import version_info
-        
-if __name__ == '__main__':
-    
+from load_data import load_data
+
+if __name__ == "__main__":
+
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-noshow', dest='no_show', action='store_true',
-                            help="No figure is shown if this flag is present.")
-    arg_parser.add_argument('-nosave', dest='no_save', action='store_true',
-                            help="No figure is saved if this flag is present.")
+    arg_parser.add_argument(
+        "-noshow",
+        dest="no_show",
+        action="store_true",
+        help="No figure is shown if this flag is present.",
+    )
+    arg_parser.add_argument(
+        "-nosave",
+        dest="no_save",
+        action="store_true",
+        help="No figure is saved if this flag is present.",
+    )
     args = arg_parser.parse_args()
     del arg_parser
-    
+
     # Close any previously open graphics windows
-    plt.close('all')
-    
+    plt.close("all")
+
     # Read data from CSV files
-    data_files = ['pred1.csv', 'pred2.csv', 'pred3.csv', 'ref.csv']
+    data_files = ["pred1.csv", "pred2.csv", "pred3.csv", "ref.csv"]
     data = load_data(data_files)
 
     # Calculate statistics for target diagram
-    target_stats1 = sm.target_statistics(data['pred1'],data['ref'],'data')
-    target_stats2 = sm.target_statistics(data['pred2'],data['ref'],'data')
-    target_stats3 = sm.target_statistics(data['pred3'],data['ref'],'data')
-     
+    target_stats1 = sm.target_statistics(data["pred1"], data["ref"], "data")
+    target_stats2 = sm.target_statistics(data["pred2"], data["ref"], "data")
+    target_stats3 = sm.target_statistics(data["pred3"], data["ref"], "data")
+
     # Store statistics in arrays
-    bias = np.array([target_stats1['bias'], target_stats2['bias'], 
-                     target_stats3['bias']])
-    crmsd = np.array([target_stats1['crmsd'], target_stats2['crmsd'], 
-                      target_stats3['crmsd']])
-    rmsd = np.array([target_stats1['rmsd'], target_stats2['rmsd'], 
-                     target_stats3['rmsd']])
+    bias = np.array(
+        [target_stats1["bias"], target_stats2["bias"], target_stats3["bias"]]
+    )
+    crmsd = np.array(
+        [target_stats1["crmsd"], target_stats2["crmsd"], target_stats3["crmsd"]]
+    )
+    rmsd = np.array(
+        [target_stats1["rmsd"], target_stats2["rmsd"], target_stats3["rmsd"]]
+    )
 
-    # Specify labels for points in a list (M1 for model prediction # 1, 
+    # Specify labels for points in a list (M1 for model prediction # 1,
     # etc.).
-    label = ['M1', 'M2', 'M3']
+    label = ["M1", "M2", "M3"]
 
-    '''
+    """
     Produce the target diagram
 
     Label the points and change the axis options. Increase the upper 
@@ -109,22 +121,31 @@ if __name__ == '__main__':
     For an exhaustive list of options to customize your diagram, 
     please call the function at a Python command line:
     >> target_diagram
-    '''
+    """
     # Label positions must be provided as a list
-    xtickLabelPos = np.ndarray.tolist(np.arange(-50,20,20)) + [40, 50]
-    sm.target_diagram(bias,crmsd,rmsd, MarkerDisplayed = 'colorBar',
-                      titleColorbar = 'RMSD', cmapzdata = rmsd,
-                      markerLabel = label, markerLabelColor = 'b',
-                      markerColor = 'b', markerLegend = 'on',
-                      ticks = np.arange(-50,60,10), axismax = 50,
-                      xtickLabelPos = xtickLabelPos,
-                      circles = [20, 40, 50],
-                      circleLineSpec = '-.b', circleLineWidth = 1.5)
+    xtickLabelPos = np.ndarray.tolist(np.arange(-50, 20, 20)) + [40, 50]
+    sm.target_diagram(
+        bias,
+        crmsd,
+        rmsd,
+        MarkerDisplayed="colorBar",
+        titleColorbar="RMSD",
+        cmapzdata=rmsd,
+        markerLabel=label,
+        markerLabelColor="b",
+        markerColor="b",
+        markerLegend="on",
+        ticks=np.arange(-50, 60, 10),
+        axismax=50,
+        xtickLabelPos=xtickLabelPos,
+        circles=[20, 40, 50],
+        circleLineSpec="-.b",
+        circleLineWidth=1.5,
+    )
 
     # Write plot to file if arguments say so
-    None if args.no_save else plt.savefig('target5.png')
+    None if args.no_save else plt.savefig("target5.png")
 
     # Show plot if arguments say so
     None if args.no_show else plt.show()
     plt.close()
-    

@@ -1,9 +1,10 @@
-from . import utils
-
 import numpy as np
 
-def centered_rms_dev(predicted,reference):
-    '''
+from . import utils
+
+
+def centered_rms_dev(predicted, reference):
+    """
     Calculates the centered root-mean-square (RMS) difference between
     two variables PREDICTED and REFERENCE (E'). The latter is calculated
     using the formula:
@@ -27,7 +28,7 @@ def centered_rms_dev(predicted,reference):
         prochford@thesymplectic.com
 
     Created on Nov 24, 2016
-    '''
+    """
 
     utils.check_arrays(predicted, reference)
 
@@ -37,7 +38,7 @@ def centered_rms_dev(predicted,reference):
 
     # Calculate (E')^2
     crmsd = np.square((predicted - pmean) - (reference - rmean))
-    crmsd = np.sum(crmsd)/predicted.size
+    crmsd = np.sum(crmsd) / predicted.size
     crmsd = np.sqrt(crmsd)
 
     return crmsd

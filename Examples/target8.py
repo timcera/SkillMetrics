@@ -1,4 +1,4 @@
-'''
+"""
 How to create a Target diagram with multiple sets of data overlaid
 
 An eighth example of how to create a target diagram given one set of
@@ -52,91 +52,113 @@ Created on Feb 27, 2019
 Revised on Aug 28, 2022
 
 @author: rochford.peter1@gmail.com
-'''
+"""
 
 import argparse
-import matplotlib.pyplot as plt
-from matplotlib import rcParams
-import numpy as np
 import pickle
-import skill_metrics as sm
 from sys import version_info
+
+import matplotlib.pyplot as plt
+import numpy as np
+import skill_metrics as sm
+from matplotlib import rcParams
+
 
 def load_obj(name):
     # Load object from file in pickle format
     if version_info[0] == 2:
-        suffix = 'pkl'
+        suffix = "pkl"
     else:
-        suffix = 'pkl3'
+        suffix = "pkl3"
 
-    with open(name + '.' + suffix, 'rb') as f:
+    with open(name + "." + suffix, "rb") as f:
         return pickle.load(f)
-    
-class Container(object): 
+
+
+class Container(object):
     def __init__(self, target_stats1, target_stats2, taylor_stats1, taylor_stats2):
         self.target_stats1 = target_stats1
         self.target_stats2 = target_stats2
         self.taylor_stats1 = taylor_stats1
         self.taylor_stats2 = taylor_stats2
 
-if __name__ == '__main__':
-    
+
+if __name__ == "__main__":
+
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-noshow', dest='no_show', action='store_true',
-                            help="No figure is shown if this flag is present.")
-    arg_parser.add_argument('-nosave', dest='no_save', action='store_true',
-                            help="No figure is saved if this flag is present.")
+    arg_parser.add_argument(
+        "-noshow",
+        dest="no_show",
+        action="store_true",
+        help="No figure is shown if this flag is present.",
+    )
+    arg_parser.add_argument(
+        "-nosave",
+        dest="no_save",
+        action="store_true",
+        help="No figure is saved if this flag is present.",
+    )
     args = arg_parser.parse_args()
     del arg_parser
 
     # Set the figure properties (optional)
     rcParams["figure.figsize"] = [6.0, 4.8]
-    rcParams['lines.linewidth'] = 1 # line width for plots
-    rcParams.update({'font.size': 12}) # font size of axes text
-    
+    rcParams["lines.linewidth"] = 1  # line width for plots
+    rcParams.update({"font.size": 12})  # font size of axes text
+
     # Close any previously open graphics windows
-    plt.close('all')
-    
-    # Read target statistics for ERA Interim (stats1) and TRMM (stats2) 
-    # data with respect to APHRODITE observations for each of years 2001 to 
+    plt.close("all")
+
+    # Read target statistics for ERA Interim (stats1) and TRMM (stats2)
+    # data with respect to APHRODITE observations for each of years 2001 to
     # 2014 from pickle file
-    stats = load_obj('Mekong_Basin_data') # observations
+    stats = load_obj("Mekong_Basin_data")  # observations
 
     # Specify labels for points in a dictionary because only desire labels
     # for each data set.
-    label = {'ERA-5': 'r', 'TRMM': 'b'}
-    
-    '''
-    Produce the target diagram for the first dataset
-    '''
-    if True:
-        sm.target_diagram(stats.target_stats1['bias'],
-                          stats.target_stats1['crmsd'],
-                          stats.target_stats1['rmsd'], markercolor ='r', alpha = 0.0,
-                          ticks=np.arange(-2.0,2.5,0.5),
-                          circles = [0.5, 1.0, 2.0],
-                          circleLineSpec = 'k--', circleLineWidth = 1.0)
-    else:
-        sm.target_diagram(stats.target_stats1['bias'], 
-                          stats.target_stats1['crmsd'], 
-                          stats.target_stats1['rmsd'], 
-                          ticks=np.arange(-2.0,2.5,0.5), 
-                          target_options_file = 'target_option_config.csv')
+    label = {"ERA-5": "r", "TRMM": "b"}
 
-    '''
+    """
+    Produce the target diagram for the first dataset
+    """
+    if True:
+        sm.target_diagram(
+            stats.target_stats1["bias"],
+            stats.target_stats1["crmsd"],
+            stats.target_stats1["rmsd"],
+            markercolor="r",
+            alpha=0.0,
+            ticks=np.arange(-2.0, 2.5, 0.5),
+            circles=[0.5, 1.0, 2.0],
+            circleLineSpec="k--",
+            circleLineWidth=1.0,
+        )
+    else:
+        sm.target_diagram(
+            stats.target_stats1["bias"],
+            stats.target_stats1["crmsd"],
+            stats.target_stats1["rmsd"],
+            ticks=np.arange(-2.0, 2.5, 0.5),
+            target_options_file="target_option_config.csv",
+        )
+
+    """
     Overlay the second dataset
-    '''
-    sm.target_diagram(stats.target_stats2['bias'],
-                      stats.target_stats2['crmsd'],
-                      stats.target_stats2['rmsd'], markercolor ='b',
-                      overlay = 'on', markerLabel = label,
-                      target_options_file = 'target_option_config.csv')
+    """
+    sm.target_diagram(
+        stats.target_stats2["bias"],
+        stats.target_stats2["crmsd"],
+        stats.target_stats2["rmsd"],
+        markercolor="b",
+        overlay="on",
+        markerLabel=label,
+        target_options_file="target_option_config.csv",
+    )
 
     # Write plot to file if arguments say so
-    None if args.no_save else plt.savefig('target8.png')
+    None if args.no_save else plt.savefig("target8.png")
 
     # Show plot if arguments say so
     None if args.no_show else plt.show()
     plt.close()
-    

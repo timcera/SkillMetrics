@@ -1,9 +1,10 @@
-from . import utils
-
 import numpy as np
 
-def bias_percent(predicted,reference):
-    '''
+from . import utils
+
+
+def bias_percent(predicted, reference):
+    """
     Calculate the percentage bias (B) between two variables PREDICTED and
     REFERENCE (E'). The latter is calculated using the formula:
 
@@ -23,7 +24,7 @@ def bias_percent(predicted,reference):
         rochford.peter1@gmail.com
 
     Created on Jun 27, 2023
-    '''
+    """
 
     utils.check_arrays(predicted, reference)
 
@@ -31,7 +32,7 @@ def bias_percent(predicted,reference):
     model = np.mean(predicted)
     ref = np.mean(reference)
     if ref != 0.0:
-        bp = 100*abs((model - ref)/ref)
+        bp = 100 * abs((model - ref) / ref)
     else:
         bp = NaN
 

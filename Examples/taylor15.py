@@ -1,4 +1,4 @@
-'''
+"""
 How to create a Taylor diagram with a large number of symbols of
 different color along with a legend.
 
@@ -64,27 +64,30 @@ Revised on Aug 28, 2022
 
 @author: rochford.peter1@gmail.com
 @author: adlzanchetta@gmail.com
-'''
+"""
 
 import argparse
+import pickle
+from sys import version_info
+
 import matplotlib.pyplot as plt
 import numpy as np
-import pickle
 import skill_metrics as sm
-from sys import version_info
+
 
 def load_obj(name):
     # Load object from file in pickle format
     if version_info[0] == 2:
-        suffix = 'pkl'
+        suffix = "pkl"
     else:
-        suffix = 'pkl3'
+        suffix = "pkl3"
 
-    with open(name + '.' + suffix, 'rb') as f:
-        return pickle.load(f) # Python2 succeeds
-    
-class Container(object): 
-    
+    with open(name + "." + suffix, "rb") as f:
+        return pickle.load(f)  # Python2 succeeds
+
+
+class Container(object):
+
     def __init__(self, bias, sdev, crmsd, ccoef, rmsd, gageID):
         self.bias = bias
         self.sdev = sdev
@@ -92,29 +95,38 @@ class Container(object):
         self.ccoef = ccoef
         self.rmsd = rmsd
         self.gageID = gageID
-        
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
 
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-noshow', dest='no_show', action='store_true',
-                            help="No figure is shown if this flag is present.")
-    arg_parser.add_argument('-nosave', dest='no_save', action='store_true',
-                            help="No figure is saved if this flag is present.")
+    arg_parser.add_argument(
+        "-noshow",
+        dest="no_show",
+        action="store_true",
+        help="No figure is shown if this flag is present.",
+    )
+    arg_parser.add_argument(
+        "-nosave",
+        dest="no_save",
+        action="store_true",
+        help="No figure is saved if this flag is present.",
+    )
     args = arg_parser.parse_args()
     del arg_parser
-    
+
     # Close any previously open graphics windows
     # ToDo: fails to work within Eclipse
-    plt.close('all')
-        
+    plt.close("all")
+
     # Read data from pickle file
-    data = load_obj('Farmington_River_data')
-    
-    '''
+    data = load_obj("Farmington_River_data")
+
+    """
     Specify individual marker label (key), label color, symbol, size, symbol face color, 
     symbol edge color
-    '''
+    """
     MARKERS = {
         "14197": {
             "labelColor": "k",
@@ -271,7 +283,7 @@ if __name__ == '__main__':
             "edgeColor": "c",
         },
     }
-    
+
     # Change number of data points to illustrate effect
     # of changing number of columns
     ncol = 2
@@ -290,15 +302,15 @@ if __name__ == '__main__':
         crmsd = data.crmsd
         ccoef = data.ccoef
         gageID = data.gageID
-        sdev = np.append(sdev,data.sdev[1:11])
-        crmsd = np.append(crmsd,data.crmsd[1:11])
-        ccoef = np.append(ccoef,data.ccoef[1:11])
+        sdev = np.append(sdev, data.sdev[1:11])
+        crmsd = np.append(crmsd, data.crmsd[1:11])
+        ccoef = np.append(ccoef, data.ccoef[1:11])
         gageID = gageID + data.gageID[1:11]
-    
+
     # Must set figure size here to prevent legend from being cut off
     plt.figure(num=1, figsize=(8, 6))
-    
-    '''
+
+    """
     Produce the Taylor diagram
 
     Label the points and change the axis options for SDEV, CRMSD, and CCOEF.
@@ -310,15 +322,25 @@ if __name__ == '__main__':
     For an exhaustive list of options to customize your diagram, 
     please call the function at a Python command line:
     >> taylor_diagram
-    '''
-    sm.taylor_diagram(sdev,crmsd,ccoef, markers = MARKERS, 
-                      markerLegend = 'on', styleOBS = '-', colOBS = 'r', markerobs = 'o',
-                      tickRMS = [0.0, 1.0, 2.0, 3.0],
-                      tickRMSangle = 115, showlabelsRMS = 'on',
-                      titleRMS = 'on', titleOBS = 'Ref')
-    
+    """
+    sm.taylor_diagram(
+        sdev,
+        crmsd,
+        ccoef,
+        markers=MARKERS,
+        markerLegend="on",
+        styleOBS="-",
+        colOBS="r",
+        markerobs="o",
+        tickRMS=[0.0, 1.0, 2.0, 3.0],
+        tickRMSangle=115,
+        showlabelsRMS="on",
+        titleRMS="on",
+        titleOBS="Ref",
+    )
+
     # Write plot to file if arguments say so
-    None if args.no_save else plt.savefig('taylor15.png')
+    None if args.no_save else plt.savefig("taylor15.png")
 
     # Show plot if arguments say so
     None if args.no_show else plt.show()
