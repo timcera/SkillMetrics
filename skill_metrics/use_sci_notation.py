@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def use_sci_notation(value):
     """
     Boolean function to determine if scientific notation to be used for value

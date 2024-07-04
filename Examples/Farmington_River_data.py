@@ -1,21 +1,21 @@
 """
-Program to create a pickle file of statistics on water temperatures 
+Program to create a pickle file of statistics on water temperatures
 in the Farmington River basin of Connecticut.
 
-This program was written to write data that is hard-coded into 
-the script to a pickle file containing dictionaries that could easily be 
-read into Python. 
+This program was written to write data that is hard-coded into
+the script to a pickle file containing dictionaries that could easily be
+read into Python.
 
-The data are stored in arrays named: sdev, crmsd, ccoef, and gageID. Each of 
-these contain 1 reference value (first position) and 22 prediction values, 
-for a total of 23 values. These arrays are stored in a container which is 
-then written to a pickle file. A different file suffix is used depending upon 
-whether the file is created using Python 2 (.pkl) or Python 3 (.pkl3) because 
-the pickle package is not cross version compatible for pickle files containing 
+The data are stored in arrays named: sdev, crmsd, ccoef, and gageID. Each of
+these contain 1 reference value (first position) and 22 prediction values,
+for a total of 23 values. These arrays are stored in a container which is
+then written to a pickle file. A different file suffix is used depending upon
+whether the file is created using Python 2 (.pkl) or Python 3 (.pkl3) because
+the pickle package is not cross version compatible for pickle files containing
 containers of dictionaries.
 
-The source data is an observation set at each location as well as a 
-simulation set. The reference value is chosen that more or less represents 
+The source data is an observation set at each location as well as a
+simulation set. The reference value is chosen that more or less represents
 the consensus on acceptable values of the root-mean square error.
 
 Author: Peter A. Rochford
@@ -51,7 +51,6 @@ def load_obj(name):
 
 
 class Container(object):
-
     def __init__(self, bias, sdev, crmsd, ccoef, rmsd, gageID):
         self.bias = bias
         self.sdev = sdev

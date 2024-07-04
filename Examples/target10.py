@@ -65,7 +65,6 @@ Revised on Sep 11, 2022
 """
 
 import argparse
-from sys import version_info
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -74,7 +73,6 @@ from get_time_series import get_time_series
 from load_data import load_dataframe
 
 if __name__ == "__main__":
-
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(

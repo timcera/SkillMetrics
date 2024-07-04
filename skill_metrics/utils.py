@@ -34,7 +34,5 @@ def check_arrays(predicted, reference):
 *       shape(reference) = {1}
 *       predicted type: {2}
 *
-""".format(
-                pdims, rdims, type(predicted)
-            )
+""".format(pdims, rdims, type(predicted))
         )

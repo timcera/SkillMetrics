@@ -201,9 +201,9 @@ def _default_options() -> dict:
     option["colormap"] = "on"
     option["equalaxes"] = "on"
 
-    option[
-        "labelweight"
-    ] = "bold"  # weight of the x/y labels ('light', 'normal', 'bold', ...)
+    option["labelweight"] = (
+        "bold"  # weight of the x/y labels ('light', 'normal', 'bold', ...)
+    )
     option["locationcolorbar"] = "NorthOutside"
 
     option["markercolor"] = None
@@ -265,7 +265,7 @@ def _get_options(option, **kwargs) -> dict:
         if optname == "nonrmsdz":
             raise ValueError("nonrmsdz is an obsolete option. Use cmapzdata instead.")
 
-        if not optname in option:
+        if optname not in option:
             raise ValueError("Unrecognized option: " + optname)
         else:
             # Replace option value with that from arguments
@@ -448,8 +448,6 @@ def get_target_diagram_options(**kwargs) -> dict:
     Created on Nov 25, 2016
     Revised on Sep 17, 2022
     """
-    from matplotlib import rcParams
-    from . import check_on_off
 
     nargin = len(kwargs)
 

@@ -1,5 +1,4 @@
 import matplotlib
-import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib.ticker import ScalarFormatter
 

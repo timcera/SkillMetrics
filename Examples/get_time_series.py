@@ -85,7 +85,7 @@ def get_time_series(variables, CSVdata, **kwargs) -> dict:
     # Check for valid keys and values in dictionary
     for optname, optvalue in kwargs.items():
         optname = optname.lower()
-        if not optname in option:
+        if optname not in option:
             raise ValueError("Unrecognized option: " + optname)
         else:
             # Replace option value with that from arguments

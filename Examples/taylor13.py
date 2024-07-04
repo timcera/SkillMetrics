@@ -2,62 +2,62 @@
 How to create a Taylor diagram with no centered RMSD contours
 
 A thirteenth example of how to create a Taylor diagram given one set of
-reference observations and two sets of model predictions for the quantity. 
-This is a variant of example 12, but where the centered RMSD contours 
+reference observations and two sets of model predictions for the quantity.
+This is a variant of example 12, but where the centered RMSD contours
 are suppressed.
 
-This example shows how to display multiple data sets on the same Taylor 
+This example shows how to display multiple data sets on the same Taylor
 diagram where a different color marker is used for each data set to
 identify its source. This is accomplished by overlaying the points from
-the second data set onto the Taylor diagram created using the first data 
+the second data set onto the Taylor diagram created using the first data
 set. Three data sets are used in this example where one is the reference
 and the other two are model predictions. This example also shows how to
 specify the legend using a dictionary instead of a list.
 
-It supports the following arguments as options. 
+It supports the following arguments as options.
 
 -noshow : No figure is shown if this flag is present
 -nosave : No figure is saved if this flag is present
 
 They can be invoked from a command line as, for example, to not show the
-plot to allow batch execution: 
+plot to allow batch execution:
 
 $ python taylor13.py -nosave
 
 The data sets are yearly time series for years 2001-2014, each stored as
 a list in a dictionary having a key of the form 'spi_2001', 'spi_2002', etc.
-There is a separate dictionary for each of the observation data set and the 
-two model predictions. Each dictionary is written to its own pickle file. 
-A different file suffix is used depending upon whether the file is created 
-using Python 2 (.pkl) or Python 3 (.pkl3) because the pickle package is not 
+There is a separate dictionary for each of the observation data set and the
+two model predictions. Each dictionary is written to its own pickle file.
+A different file suffix is used depending upon whether the file is created
+using Python 2 (.pkl) or Python 3 (.pkl3) because the pickle package is not
 cross version compatible for pickle files containing dictionaries.
 
-The data in these files are statistics calculated from yearly time series of 
-Standard Precipitation Index value over the Mekong basin, a trans-boundary 
-river in Southeast Asia that originates in the Tibetan Plateau and runs 
-through China's Yunnan Province, Myanmar, Laos, Thailand, Cambodia, and Vietnam. 
-The data sources are the ERA5 climate reanalysis dataset from the European 
-Centre for Medium-Range Weather Forecasts (ECMWF) and the Tropical Rainfall 
-Measuring Mission (TRMM 3B42 v7) satellite data, whilst the observation data is 
-the Asian Precipitation - Highly-Resolved Observational Data Integration 
-Towards Evaluation (APHRODITE V1801R1) rain-gauge data. All the statistics for 
+The data in these files are statistics calculated from yearly time series of
+Standard Precipitation Index value over the Mekong basin, a trans-boundary
+river in Southeast Asia that originates in the Tibetan Plateau and runs
+through China's Yunnan Province, Myanmar, Laos, Thailand, Cambodia, and Vietnam.
+The data sources are the ERA5 climate reanalysis dataset from the European
+Centre for Medium-Range Weather Forecasts (ECMWF) and the Tropical Rainfall
+Measuring Mission (TRMM 3B42 v7) satellite data, whilst the observation data is
+the Asian Precipitation - Highly-Resolved Observational Data Integration
+Towards Evaluation (APHRODITE V1801R1) rain-gauge data. All the statistics for
 the yearly time series are calculated as a function of the year, i.e. 2001 ERA5
-and TRMM are calculated using APHRODITE 2001, 2002 ERA5 and TRMM are calculated 
+and TRMM are calculated using APHRODITE 2001, 2002 ERA5 and TRMM are calculated
 using APHRODITE 2002, etc.
 
-Note that the centered RMSD contours are suppressed for this Taylor diagram. 
-This is important because the origin for the RMSD contours is specified by the 
-standard deviation of the observations as dictated by the Taylor relationship. 
-While statistics for each data point can be calculated using observations for 
-that year and displayed on the diagram, there is no universal set of RMSD contours 
-to correctly indicate the centered RMSD values of the different points, because 
-each point is associated with a different observation standard deviation, and 
+Note that the centered RMSD contours are suppressed for this Taylor diagram.
+This is important because the origin for the RMSD contours is specified by the
+standard deviation of the observations as dictated by the Taylor relationship.
+While statistics for each data point can be calculated using observations for
+that year and displayed on the diagram, there is no universal set of RMSD contours
+to correctly indicate the centered RMSD values of the different points, because
+each point is associated with a different observation standard deviation, and
 hence each has a different set of RMS contours with its own distinct origin. To
-show statistics respect to reference time series of the same year, one must 
-suppress the RMSD contours, as otherwise it would provide a misleading indication 
+show statistics respect to reference time series of the same year, one must
+suppress the RMSD contours, as otherwise it would provide a misleading indication
 of the centered RMSD values.
 
-This data was provided courtesy of Iacopo Ferrario, Resources Scientist, 
+This data was provided courtesy of Iacopo Ferrario, Resources Scientist,
 HR Wallingford, Flood and Water Resources group, Wallingford Oxfordshire,
 United Kingdom
 
@@ -100,7 +100,6 @@ class Container(object):
 
 
 if __name__ == "__main__":
-
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(

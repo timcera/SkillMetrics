@@ -1,4 +1,3 @@
-import numpy as np
 from . import brier_score
 
 from . import utils

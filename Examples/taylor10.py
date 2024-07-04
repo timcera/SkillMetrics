@@ -74,7 +74,6 @@ def load_obj(name):
 
 
 class Container(object):
-
     def __init__(self, pred1, pred2, pred3, ref):
         self.pred1 = pred1
         self.pred2 = pred2
@@ -83,7 +82,6 @@ class Container(object):
 
 
 if __name__ == "__main__":
-
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(

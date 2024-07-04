@@ -235,9 +235,9 @@ def _default_options(CORs: list) -> dict:
     option["colormap"] = "on"
 
     option["labelrms"] = "RMSD"
-    option[
-        "labelweight"
-    ] = "bold"  # weight of the x/y labels ('light', 'normal', 'bold', ...)
+    option["labelweight"] = (
+        "bold"  # weight of the x/y labels ('light', 'normal', 'bold', ...)
+    )
     option["locationcolorbar"] = "NorthOutside"
 
     option["markercolor"] = None
@@ -337,7 +337,7 @@ def _get_options(option: dict, **kwargs) -> dict:
         if optname == "nonrmsdz":
             raise ValueError("nonrmsdz is an obsolete option. Use cmapzdata instead.")
 
-        if not optname in option:
+        if optname not in option:
             raise ValueError("Unrecognized option: " + optname)
         else:
             # Replace option value with that from arguments

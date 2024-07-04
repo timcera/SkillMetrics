@@ -328,7 +328,6 @@ def _get_taylor_diagram_arguments(*args):
     """
 
     # Check amount of values provided and display options list if needed
-    import numbers
 
     nargin = len(args)
     if nargin == 0:

@@ -2,11 +2,11 @@
 How to create a Taylor diagram with a large number of symbols of
 different color along with a legend.
 
-A fifteenth example of how to create a Taylor diagram with individual 
+A fifteenth example of how to create a Taylor diagram with individual
 control of the marker symbols, color, type, size, etc. This allows the
 user to have custom control over the appearance of the markers and the
-legend. However, it requires the user to specify all the details for each 
-marker in a dictionary where the key is the marker label provided as a 
+legend. However, it requires the user to specify all the details for each
+marker in a dictionary where the key is the marker label provided as a
 string. For example, for river gauge "14197":
 
 MARKERS = {
@@ -29,8 +29,8 @@ plot to allow batch execution:
 $ python taylor15.py -nosave
 
 The Taylor diagram created is for a model of water temperatures in the
-Farmington River basin of Connecticut. This script is based on Taylor diagram 
-example 10. 
+Farmington River basin of Connecticut. This script is based on Taylor diagram
+example 10.
 
 The data are stored in arrays named: sdev, crmsd, ccoef, and gageID. Each of
 these contain 1 reference value (first position) and 22 prediction values,
@@ -87,7 +87,6 @@ def load_obj(name):
 
 
 class Container(object):
-
     def __init__(self, bias, sdev, crmsd, ccoef, rmsd, gageID):
         self.bias = bias
         self.sdev = sdev
@@ -98,7 +97,6 @@ class Container(object):
 
 
 if __name__ == "__main__":
-
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(

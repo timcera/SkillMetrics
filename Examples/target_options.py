@@ -1,6 +1,6 @@
 """
 Simple program to provide list of options for creating a target diagram. Used for package
-development. Explicitly accesses the latest method rather than the one distributed in the 
+development. Explicitly accesses the latest method rather than the one distributed in the
 package.
 
 Author: Peter A. Rochford

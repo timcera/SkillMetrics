@@ -2,11 +2,11 @@
 How to create a target diagram with a large number of symbols of
 different color along with a legend.
 
-An eleventh example of how to create a target diagram with individual 
+An eleventh example of how to create a target diagram with individual
 control of the marker symbols, color, type, size, etc. This allows the
 user to have custom control over the appearance of the markers and the
-legend. However, it requires the user to specify all the details for each 
-marker in a dictionary where the key is the marker label provided as a 
+legend. However, it requires the user to specify all the details for each
+marker in a dictionary where the key is the marker label provided as a
 string. For example, for river gauge "14197":
 
 MARKERS = {
@@ -19,24 +19,24 @@ MARKERS = {
     }
 
 
-It supports the following arguments as options. 
+It supports the following arguments as options.
 
 -noshow : No figure is shown if this flag is present
 -nosave : No figure is saved if this flag is present
 
 They can be invoked from a command line as, for example, to not show the
-plot to allow batch execution: 
+plot to allow batch execution:
 
 $ python target11.py -noshow
 
 The target diagram created is for a model of water temperatures in the
-Farmington River basin of Connecticut. Note that the bias values were 
+Farmington River basin of Connecticut. Note that the bias values were
 created for representative purposes and do not represent the true bias
-of the model water temperatures. 
+of the model water temperatures.
 
-The data are stored in arrays named: bias, sdev, crmsd, rmsd, ccoef, and 
-gageID. Each of these contain 1 reference value (first position) and 22 
-prediction values, for a total of 23 values. These arrays are stored in a 
+The data are stored in arrays named: bias, sdev, crmsd, rmsd, ccoef, and
+gageID. Each of these contain 1 reference value (first position) and 22
+prediction values, for a total of 23 values. These arrays are stored in a
 container which is then written to a pickle file for Python 3
 (.pkl3).
 
@@ -70,7 +70,6 @@ from sys import version_info
 import matplotlib.pyplot as plt
 import numpy as np
 import skill_metrics as sm
-from load_data import load_data
 
 
 def load_obj(name):
@@ -85,7 +84,6 @@ def load_obj(name):
 
 
 class Container(object):
-
     def __init__(self, bias, sdev, crmsd, ccoef, rmsd, gageID):
         self.bias = bias
         self.sdev = sdev
@@ -96,7 +94,6 @@ class Container(object):
 
 
 if __name__ == "__main__":
-
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(

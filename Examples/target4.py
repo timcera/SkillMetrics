@@ -9,41 +9,41 @@ legend is added, the marker colors are changed, and the radii of circles
 to draw are specified. Note that symbols are used for the points when
 requesting a legend.
 
-It supports the following arguments as options. 
+It supports the following arguments as options.
 
 -noshow : No figure is shown if this flag is present
 -nosave : No figure is saved if this flag is present
 
 They can be invoked from a command line as, for example, to not show the
-plot to allow batch execution: 
+plot to allow batch execution:
 
 $ python target4.py -noshow
 
-All functions in the Skill Metrics library are designed to only work with 
-one-dimensional arrays, e.g. time series of observations at a selected location. 
-The one-dimensional data are read in as dictionaries via Comma, Separated, 
+All functions in the Skill Metrics library are designed to only work with
+one-dimensional arrays, e.g. time series of observations at a selected location.
+The one-dimensional data are read in as dictionaries via Comma, Separated,
 Value (CSV) files:
 
 data_files = ['pred1.csv', 'pred2.csv', 'pred3.csv', 'ref.csv']
 
-This is done to make it easy for people who are new to Python to adapt this 
-script to read their data. Refer to the load_data function for the format 
-the CSV file must satisfy. 
+This is done to make it easy for people who are new to Python to adapt this
+script to read their data. Refer to the load_data function for the format
+the CSV file must satisfy.
 
 The plot is written to a file in Portable Network Graphics (PNG) format, see
 plt.savefig() below. Other formats are available by specifying the appropriate
-file suffix for graphics supported by matplotlib. 
+file suffix for graphics supported by matplotlib.
 
 The reference data used in this example are cell concentrations of a
-phytoplankton collected from cruise surveys at selected locations and 
+phytoplankton collected from cruise surveys at selected locations and
 time. The model predictions are from three different simulations that
 have been space-time interpolated to the location and time of the sample
-collection. Details on the contents of the dictionary (once loaded) can 
+collection. Details on the contents of the dictionary (once loaded) can
 be obtained by simply executing the following two statements
 
 >> key_to_value_lengths = {k:len(v) for k, v in data['ref'].items()}
 >> print(key_to_value_lengths)
-{'units': 6, 'longitude': 57, 'jday': 57, 'date': 57, 'depth': 57, 
+{'units': 6, 'longitude': 57, 'jday': 57, 'date': 57, 'depth': 57,
 'station': 57, 'time': 57, 'latitude': 57, 'data': 57}
 
 
@@ -56,7 +56,6 @@ Revised on Sep 11, 2022
 """
 
 import argparse
-from sys import version_info
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -64,7 +63,6 @@ import skill_metrics as sm
 from load_data import load_data
 
 if __name__ == "__main__":
-
     # Define optional arguments for script
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(

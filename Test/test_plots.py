@@ -74,7 +74,6 @@ import os
 import subprocess
 
 import numpy as np
-import pandas  # this script does not use pandas, but import it to ensure the
 from PIL import Image
 
 #    functionality of the others
@@ -129,7 +128,7 @@ def get_ndarrays(pillow_img) -> np.ndarray:
     try:
         # for Python 3.6.5, pillow 8.4.0
         return pillow_img.__array__()
-    except AttributeError as e:
+    except AttributeError:
         # for Python 3.10.4, pillow 9.2.0
         return np.array(pillow_img)
 
@@ -183,8 +182,9 @@ def compare_rasters_pixelwise(prev: str, curr: str) -> tuple:
         pixels_prev, pixels_curr, resized = get_comparable_pixels_rgba(prev, curr)
 
         # get images 'intensities' (color magnitude)
-        pixels_maginitude_1, pixels_maginitude_2 = np.sum(pixels_prev), np.sum(
-            pixels_curr
+        pixels_maginitude_1, pixels_maginitude_2 = (
+            np.sum(pixels_prev),
+            np.sum(pixels_curr),
         )
         pixels_maginitude_mean = np.mean([pixels_maginitude_1, pixels_maginitude_2])
         del pixels_maginitude_1, pixels_maginitude_2
@@ -212,7 +212,6 @@ def evaluate_output(all_script_file_names: tuple, clean_files: bool) -> None:
     print("Executing %d scripts in sequence:" % len(all_script_file_names))
 
     for script_count, script_file_name in enumerate(all_script_file_names):
-
         # get new and old filenames
         output_file_name = script_file_name[0:-3]
         output_file_name_new = DEBUG_FILE_NAME.replace("<BASE>", output_file_name)
@@ -223,7 +222,6 @@ def evaluate_output(all_script_file_names: tuple, clean_files: bool) -> None:
         py_command = PYTHON_COMMAND.replace("<SCRIPT>", script_file_name)
 
         if os.path.exists(output_file_name_old):
-
             # run the command and calculate files distance
             subprocess.run(py_command, shell=True, stdout=subprocess.DEVNULL)
             rasters_distance_pct, resized = compare_rasters_pixelwise(
@@ -274,7 +272,6 @@ def evaluate_output(all_script_file_names: tuple, clean_files: bool) -> None:
 # ## MAIN ####################################################################### #
 
 if __name__ == "__main__":
-
     # Defines the output file name or path
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(

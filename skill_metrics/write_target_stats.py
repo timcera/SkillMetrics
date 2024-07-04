@@ -53,7 +53,7 @@ def write_target_stats(filename, data, **kwargs):
             raise ValueError("File already exists: " + filename)
 
     # Covert data to list if necessary
-    if not type(data) is list:
+    if type(data) is not list:
         data = [data]
 
     # Write title information to file
@@ -161,7 +161,7 @@ def get_write_target_stats_options(**kwargs):
     # Check for valid keys and values in dictionary
     for optname, optvalue in kwargs.items():
         optname = optname.lower()
-        if not optname in option:
+        if optname not in option:
             raise ValueError("Unrecognized option: " + optname)
         else:
             # Replace option value with that from arguments
