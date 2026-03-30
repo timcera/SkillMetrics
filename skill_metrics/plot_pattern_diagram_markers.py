@@ -54,7 +54,7 @@ def plot_pattern_diagram_markers(ax: matplotlib.axes.Axes, X, Y, option: dict):
     alpha = option["alpha"]
 
     # Set font and marker size
-    fontSize = matplotlib.rcParams.get("font.size") - 2
+    fontSize = matplotlib.rcParams.get("font.size")
     markerSize = option["markersize"]
 
     # Check enough labels provided if markerlabel provided. Not a problem if labels
@@ -165,6 +165,9 @@ def plot_pattern_diagram_markers(ax: matplotlib.axes.Axes, X, Y, option: dict):
             face_color = edge_color
         face_color = clr.to_rgb(face_color) + (alpha,)
 
+        # calculate x-offset for labeling of markers
+        numberpanels = option.get("numberpanels", 2)
+        xoffset = 0.005 * markerSize * limit * numberpanels / 2
         labelcolor = []
         for i in range(len(X)):
             xval, yval = X[i], Y[i]
@@ -184,7 +187,7 @@ def plot_pattern_diagram_markers(ax: matplotlib.axes.Axes, X, Y, option: dict):
                 if type(option["markerlabel"]) is list:
                     # Label marker
                     ax.text(
-                        xval,
+                        xval - xoffset,
                         yval,
                         option["markerlabel"][i],
                         color=option["markerlabelcolor"],

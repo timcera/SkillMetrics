@@ -62,7 +62,7 @@ def plot_pattern_diagram_colorbar(
     """
     fontSize = rcParams.get("font.size")
     cxscale = fontSize / 10  # scale color bar by font size
-    markerSize = option["markersize"] * 2
+    markerSize = option["markersize"] * 8
 
     hp = plt.scatter(
         X,

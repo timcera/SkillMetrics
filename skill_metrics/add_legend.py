@@ -21,10 +21,15 @@ def add_legend(markerLabel, labelcolor, option, rgba, markerSize, fontSize, hp=[
                   A list variable must have the format:
                   markerLabel = ['M1', 'M2', 'M3']
 
-                  A dictionary variable must have the format:
-                  markerLabel = = {'ERA-5': 'r', 'TRMM': 'b'}
-                  where each key is the label and each value the color for
-                  the marker
+                  A dictionary variable must have one of the formats:
+                  markerLabel = {'ERA-5': 'r', 'TRMM': 'b'}
+
+                  or
+
+                  markerLabel = {'ERA-5': {"color" : "r", "marker" : "*"},
+                                 'TRMM' : {"color" : "b", "marker" : "."}}
+                  where each key is the label and each value the color and
+                  symbol for the marker
     labelcolor : color of marker label
 
     option : dictionary containing option values. (Refer to
@@ -42,7 +47,7 @@ def add_legend(markerLabel, labelcolor, option, rgba, markerSize, fontSize, hp=[
     None
 
     Created on Mar 2, 2019
-    Revised on Mar 2, 2019
+    Revised on Nov 9, 2025
 
     Author: Peter A. Rochford
         Symplectic, LLC
@@ -104,13 +109,21 @@ def add_legend(markerLabel, labelcolor, option, rgba, markerSize, fontSize, hp=[
         # Define legend elements
         legend_elements = []
         for key, value in markerLabel.items():
+            if isinstance(value, dict):
+                # color and marker provided in a dictionary
+                color = str(value["color"])
+                marker = str(value["marker"])
+            else:
+                # only color provided as a value
+                color = str(value)
+                marker = "."
             legend_object = Line2D(
                 [0],
                 [0],
-                marker=".",
+                marker=marker,
                 markersize=markerSize,
                 markerfacecolor=rgba,
-                markeredgecolor=value,
+                markeredgecolor=color,
                 label=key,
                 linestyle="",
             )

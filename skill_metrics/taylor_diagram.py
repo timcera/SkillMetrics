@@ -139,6 +139,10 @@ def _display_taylor_diagram_options() -> None:
 
     _dispopt("'labelRMS'", "RMS axis label (Default 'RMSD')")
 
+    _dispopt(
+        "'labelRMSpos'",
+        "'outside' (default) / 'inside': Axis label position in RMS circle",
+    )
     _dispopt("'rincRMS'", "Axis tick increment for RMS values")
 
     _dispopt(
@@ -162,7 +166,7 @@ def _display_taylor_diagram_options() -> None:
 
     _dispopt(
         "'titleRMSDangle'",
-        "angle at which to display the 'RMSD' label for the\n\t\t"
+        "Angle at which to display the 'RMSD' label for the\n\t\t"
         + "RMSD contours (Default: 160 degrees)",
     )
 
@@ -292,7 +296,7 @@ def _dispopt(optname, optval):
 
 def _ensure_np_array_or_die(v, label: str) -> np.ndarray:
     """
-    Check variable has is correct data type.
+     Check variable has is correct data type.
 
     v: Value to be ensured
     label: Python data type
@@ -411,6 +415,7 @@ def taylor_diagram(*args, **kwargs) -> None:
 
     # Check for no arguments
     if len(args) == 0:
+        _get_taylor_diagram_arguments()  # Display options list
         return
 
     # Process arguments (if given)
@@ -420,11 +425,8 @@ def taylor_diagram(*args, **kwargs) -> None:
     options = get_taylor_diagram_options(CORs, **kwargs)
 
     # Check the input statistics if requested.
-    (
+    if options["checkstats"] == "on":
         check_taylor_stats(STDs, RMSs, CORs, 0.01)
-        if options["checkstats"] == "on"
-        else None
-    )
 
     # Express statistics in polar coordinates.
     rho, theta = STDs, np.arccos(CORs)
@@ -447,8 +449,7 @@ def taylor_diagram(*args, **kwargs) -> None:
 
         del axes_handles
 
-    # Plot data points. Note that only rho[1:N] and theta[1:N] are
-    # plotted.
+    # Plot data points. Note that only rho[1:N] and theta[1:N] are plotted.
     X = np.multiply(rho[1:], np.cos(theta[1:]))
     Y = np.multiply(rho[1:], np.sin(theta[1:]))
 
@@ -462,7 +463,7 @@ def taylor_diagram(*args, **kwargs) -> None:
             # Use Centered Root Mean Square Difference for colors
             plot_pattern_diagram_colorbar(ax, X, Y, RMSs[1:], options)
         else:
-            # Use Bias values for colors
+            # Use provided cmapzdata values for colors
             plot_pattern_diagram_colorbar(ax, X, Y, options["cmapzdata"][1:], options)
     else:
         raise ValueError("Unrecognized option: " + options["markerdisplayed"])

@@ -131,20 +131,26 @@ def plot_taylor_axes(ax: matplotlib.axes.Axes, axes: dict, option: dict) -> list
             pos1 = option["titlermsdangle"]
             DA = 10
             c = np.fliplr([np.linspace(pos1 - DA, pos1 + DA, len(lab))])[0]
-            if option["tickrms"][0] > 0:
-                dd = 0.8 * option["tickrms"][0] + 0.2 * option["tickrms"][1]
+            if option["labelrmspos"] == "outside":
+                acoef = 0.8
+                bcoef = 0.2
             else:
-                dd = 0.8 * option["tickrms"][1] + 0.2 * option["tickrms"][2]
+                acoef = 0.52
+                bcoef = 0.2
+            if option["tickrms"][0] > 0:
+                dd = acoef * option["tickrms"][0] + bcoef * option["tickrms"][1]
+            else:
+                dd = acoef * option["tickrms"][1] + bcoef * option["tickrms"][2]
 
             # Adjust spacing of label letters if on too small an arc
             posFraction = dd / axes["rmax"]
-            if posFraction < 0.35:
+            if posFraction < 0.31:
                 DA = 2 * DA
                 c = np.fliplr([np.linspace(pos1 - DA, pos1 + DA, len(lab))])[0]
 
             # Write label in a circular arc
             for ii, ith in enumerate(c):
-                xtextpos = axes["dx"] + dd * np.cos(ith * np.pi / 180)
+                xtextpos = axes["dx"] + dd * np.cos(ith * np.pi / 180) - 0.01 * ii * dd
                 ytextpos = dd * np.sin(ith * np.pi / 180)
                 handle = ax.text(xtextpos, ytextpos, lab[ii])
                 handle.set(
@@ -205,19 +211,25 @@ def plot_taylor_axes(ax: matplotlib.axes.Axes, axes: dict, option: dict) -> list
             pos1 = option["titlermsdangle"]
             DA = 10
             c = np.fliplr([np.linspace(pos1 - DA, pos1 + DA, len(lab))])[0]
-            if option["tickrms"][0] > 0:
-                dd = 0.7 * option["tickrms"][0] + 0.3 * option["tickrms"][1]
+            if option["labelrmspos"] == "outside":
+                acoef = 0.7
+                bcoef = 0.3
             else:
-                dd = 0.7 * option["tickrms"][1] + 0.3 * option["tickrms"][2]
+                acoef = 0.4
+                bcoef = 0.3
+            if option["tickrms"][0] > 0:
+                dd = acoef * option["tickrms"][0] + bcoef * option["tickrms"][1]
+            else:
+                dd = acoef * option["tickrms"][1] + bcoef * option["tickrms"][2]
 
             # Adjust spacing of label letters if on too small an arc
             posFraction = dd / axes["rmax"]
-            if posFraction < 0.35:
+            if posFraction < 0.31:
                 DA = 2 * DA
                 c = np.fliplr([np.linspace(pos1 - DA, pos1 + DA, len(lab))])[0]
 
             for ii, ith in enumerate(c):
-                xtextpos = axes["dx"] + dd * np.cos(ith * np.pi / 180)
+                xtextpos = axes["dx"] + dd * np.cos(ith * np.pi / 180) - 0.01 * ii * dd
                 ytextpos = dd * np.sin(ith * np.pi / 180)
                 handle = ax.text(xtextpos, ytextpos, lab[ii])
                 handle.set(
